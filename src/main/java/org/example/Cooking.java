@@ -8,7 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Cooker {
+public class Cooking {
+    private int id;
     private String ingredient;
     private int time;
     private String difficulty;

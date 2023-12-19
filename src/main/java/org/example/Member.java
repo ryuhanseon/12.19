@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CookRecipe {
+public class Member {
 
     private int memberId;
     private String userId;

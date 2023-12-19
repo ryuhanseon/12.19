@@ -11,11 +11,11 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        List<CookRecipe> cookRecipes = new ArrayList<>();
-        List<Cooker> cookerList = new ArrayList<>();
+        List<Member> memberList = new ArrayList<>();
+        List<Cooking> cookerList = new ArrayList<>();
         int memberId = 1;
-        int cookhelp = 1;
-        CookRecipe userInfo = null;
+        int chefId = 1;
+        Member userInfo = null;
         System.out.println("요리 게시판");
         while (true) {
             System.out.println("게시판 입력: ");
@@ -33,7 +33,7 @@ public class Main {
                     System.out.println("아이디를 입력해주세요: ");
                     userId = sc.nextLine();
                     boolean isDuplecated = false;
-                    for (CookRecipe cookRecipe : cookRecipes) {
+                    for (Member cookRecipe : memberList) {
                         if (userId.equals(cookRecipe.getUserId())) {
                             System.out.println("중복아이디가 존재합니다.");
                             isDuplecated = true;
@@ -55,14 +55,14 @@ public class Main {
                     }
                     System.out.println("일치하는 비밀번호가 없습니다.");
                 }
-                CookRecipe cookRecipe = new CookRecipe(memberId, userId, password, now.toString());
-                cookRecipes.add(cookRecipe);
+                Member cookRecipe = new Member(memberId, userId, password, now.toString());
+                memberList.add(cookRecipe);
                 System.out.println(userId + "님 회원가입을 환영합니다.");
                 memberId++;
             } else if (command.equals("로그인")) {
 
-                CookRecipe rogin = null;
-                if (userInfo==null){
+                Member rogin = null;
+                if (userInfo == null) {
                     System.out.println("로그인 상태가 안닙니다.");
                     continue;
                 }
@@ -70,7 +70,7 @@ public class Main {
                 String username = sc.nextLine();
                 System.out.printf("비밀번호를 입력해주세요: ");
                 String password = sc.nextLine();
-                for (CookRecipe cookRecipe : cookRecipes) {
+                for (Member cookRecipe : memberList) {
                     if (username.equals(cookRecipe.getUserId())) {
                         rogin = cookRecipe;
                         break;
@@ -80,7 +80,7 @@ public class Main {
                     System.out.println("로그인이 되지 않습니다.");
                     continue;
                 }
-                if (rogin.getPassword().equals(password)==false) {
+                if (rogin.getPassword().equals(password) == false) {
                     System.out.println("일치하는 비밀번호가 없습니다.");
                     continue;
                 }
@@ -89,26 +89,16 @@ public class Main {
 
 
             } else if (command.equals("로그아웃")) {
-                if (userInfo==null){
+                if (userInfo == null) {
                     System.out.println("로그아웃 상태입니다.");
                     continue;
                 }
-            }
-        }
-        sc.close();
-
-        while (true){
-            System.out.println("회원정보가 일치하여 로그인합니다. 레시피 단계로 이동합니다. ");
-            System.out.println("메뉴를 선택 해주세요.");
-            String choose = sc.nextLine();
-            if (choose.equals("종료")){
-                break;
-            } else if (choose.equals("자신이 고르고 싶은 종류의 음식을 등록합니다.")) {
+            } else if (command.equals("레시피 등록")) {
 
                 System.out.println("재료: ");
                 String ingredient = sc.nextLine();
                 System.out.println("소요시간: ");
-                int time = sc.nextInt();
+                int time = Integer.parseInt(sc.nextLine());
                 System.out.println("난이도: ");
                 String difficulty = sc.nextLine();
                 System.out.println("음식종류: ");
@@ -122,26 +112,34 @@ public class Main {
                 System.out.println("주의사항: ");
                 String caution = sc.nextLine();
 
-                Cooker cooker = new Cooker(ingredient, time, difficulty, foodtype, instruction, calories, tips, caution);
+                Cooking cooker = new Cooking(chefId, ingredient, time, difficulty, foodtype, instruction, calories, tips, caution);
                 cookerList.add(cooker);
-                cookhelp++;
-            } else if (choose.equals("목록")) {
+                chefId++;
+            } else if (command.equals("목록")) {
                 System.out.println("재료 / 소요시간 / 난이도 / 음식종류 / 조리방법 / 칼로리 / 팁 / 주의사항");
                 System.out.println("--------------------");
-                for (Cooker cooker:cookerList) {
-                    System.out.printf("%d,   %s,   %s\n", cooker.getIngredient(), cooker.getTime(), cooker.getDifficulty(),
-                            cooker.getFoodtype(), cooker.getInstruction(), cooker.getCalories(), cooker.getTips(), cooker.getCaution());
+                for (Cooking cooking : cookerList) {
+                    System.out.printf("%s, %d, %s, %s, %s, %s, %s, %s\n", cooking.getIngredient(), cooking.getTime(), cooking.getDifficulty(),
+                            cooking.getFoodtype(), cooking.getInstruction(), cooking.getCalories(), cooking.getTips(), cooking.getCaution());
                 }
-            } else if (choose.equals("삭제")) {
-                System.out.println("삭제할 내용을 입력해 주세요: ");
-                String delete = sc.nextLine();
-                for (int i = 0; i < cookerList.size();i++){
-                    if (delete==cookerList.get(i).get){
-
+            } else if (command.equals("삭제")) {
+                System.out.println("삭제할 Id를 입력해 주세요: ");
+                int deleteId = Integer.parseInt(sc.nextLine());
+                for (int i = 0; i < cookerList.size(); i++) {
+                    if (deleteId == cookerList.get(i).getTime()) {
+                        cookerList.remove(i);
+                        System.out.println(deleteId + "값이 지워집니다.");
                     }
-                }
-            }
-        }
 
+                }
+
+
+
+            }
+
+
+        }
+        sc.close();
     }
 }
+
