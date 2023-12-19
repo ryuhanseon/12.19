@@ -12,7 +12,9 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         List<CookRecipe> cookRecipes = new ArrayList<>();
+        List<Cooker> cookerList = new ArrayList<>();
         int memberId = 1;
+        int cookhelp = 1;
         CookRecipe userInfo = null;
         System.out.println("요리 게시판");
         while (true) {
@@ -102,14 +104,42 @@ public class Main {
             if (choose.equals("종료")){
                 break;
             } else if (choose.equals("자신이 고르고 싶은 종류의 음식을 등록합니다.")) {
-                System.out.println("등록");
-                String command = sc.nextLine();
+
                 System.out.println("재료: ");
                 String ingredient = sc.nextLine();
                 System.out.println("소요시간: ");
                 int time = sc.nextInt();
                 System.out.println("난이도: ");
                 String difficulty = sc.nextLine();
+                System.out.println("음식종류: ");
+                String foodtype = sc.nextLine();
+                System.out.println("조리방법: ");
+                String instruction = sc.nextLine();
+                System.out.println("칼로리: ");
+                String calories = sc.nextLine();
+                System.out.println("팁: ");
+                String tips = sc.nextLine();
+                System.out.println("주의사항: ");
+                String caution = sc.nextLine();
+
+                Cooker cooker = new Cooker(ingredient, time, difficulty, foodtype, instruction, calories, tips, caution);
+                cookerList.add(cooker);
+                cookhelp++;
+            } else if (choose.equals("목록")) {
+                System.out.println("재료 / 소요시간 / 난이도 / 음식종류 / 조리방법 / 칼로리 / 팁 / 주의사항");
+                System.out.println("--------------------");
+                for (Cooker cooker:cookerList) {
+                    System.out.printf("%d,   %s,   %s\n", cooker.getIngredient(), cooker.getTime(), cooker.getDifficulty(),
+                            cooker.getFoodtype(), cooker.getInstruction(), cooker.getCalories(), cooker.getTips(), cooker.getCaution());
+                }
+            } else if (choose.equals("삭제")) {
+                System.out.println("삭제할 내용을 입력해 주세요: ");
+                String delete = sc.nextLine();
+                for (int i = 0; i < cookerList.size();i++){
+                    if (delete==cookerList.get(i).get){
+
+                    }
+                }
             }
         }
 
